@@ -1,0 +1,90 @@
+<nav class="navbar bg-dark navbar-dark">    
+    <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="margin-left: 30px;">HR Management</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" style="margin-right: 30px;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item" style="margin: 10px 20px;">
+
+          <button type="button" (click)="RouteToFindAllEmployees()" class="btn btn-light mx-3" >ShowAll Employees</button>
+
+          <button type="button" (click)="RouteToFindAllDepartments()" class="btn btn-primary " >ShowAll Departments</button>
+
+          <button type="button" (click)="RouteToMyProfile()" class="btn btn-danger mx-3" >My profile</button>
+
+          <button type="button" (click)="RouteToFindSuspendedUsers()" class="btn btn-warning " >View Suspended Users</button>
+
+          <button type="button" routerLink="/employee-roles" class="btn btn-secondary mx-3 " >View Roles</button>
+
+
+
+        </li>
+        <li>
+          <div class="container">
+            <div class="col-6" style="position:relative; right:255px; margin-top: 10px;">
+          <div class="input-group ">
+            <!-- <mat-form-field>
+              <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Filter">
+            </mat-form-field> -->
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input [(ngModel)]="searchValue" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+        </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div style="padding:30px">
+
+    <table class="table mt-3 table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">username</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Role</th>
+
+                <th scope="col" style="text-align: left; font-size: 25px; color: rgb(23, 109, 51);">Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of employeeData| searchfilter:searchValue">
+              <td>{{row.EMPLOYEE_ID}}</td>
+              <td>{{row.username}}</td>
+              <td>{{row.contactInfo[0].FIRST_NAME}}</td>
+              <td>{{row.contactInfo[0].LAST_NAME}}</td>
+              <td style="font-weight: 500; text-transform: uppercase;">{{row.role}}</td>
+
+              <td>
+                <div class="row" style="margin: 10px 0px 0px 0px; position: relative; right: 20px; ">
+                    <div class="col-5">
+                     <select  class="form-select " aria-label="Default select example"  [id]="row.EMPLOYEE_ID">
+                        <option>Select a Role </option>					 
+                        <option  *ngFor="let item of roleKeys" [value]="item" style="text-transform: uppercase;">{{item}} </option>					 
+                        <!-- <option  value="1">{{dept.username}}</option> -->
+                    </select> 
+                    
+                    </div>
+                    <div class="col">
+                      <button class="btn btn-outline-success" style="font-weight: 500;" (click)="updateRole(row.EMPLOYEE_ID)" type="submit" >update</button>
+                    </div>
+                </div>
+                    <!-- <button (click)="onEdit(row)" class="btn btn-outline-info mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                    <button  (click)="onView(row)" class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View</button>
+                    <button (click)="deleteEmployee(row)" class="btn btn-outline-danger mx-2">Suspend</button> -->
+              </td>
+            </tr>
+        </tbody>
+    </table> -->
+
+
+
+    <simple-notifications></simple-notifications>

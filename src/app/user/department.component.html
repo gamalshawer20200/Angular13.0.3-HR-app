@@ -1,0 +1,338 @@
+<nav class="navbar bg-dark navbar-dark">    
+    <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="margin-left: 30px; height: 50px;">HR Management</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" style="margin-right: 30px;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <!-- <li class="nav-item" style="margin: 10px 20px;">
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add Employee</button>
+        </li> -->
+        <li class="nav-item" style="margin: 10px 20px;">
+          <!-- <button type="button" (click)="onEdit()" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Employee</button> -->
+          <button  type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="clickAddEmployee()"> Add Department</button>
+          <button type="button" (click)="RouteToFindAllEmployees()" class="btn btn-light mx-3" >ShowAll Employees</button>
+          <button type="button" (click)="RouteToFindAllDepartments()" class="btn btn-primary" >ShowAll Departments</button>
+          <button type="button" (click)="RouteToMyProfile()" class="btn btn-danger mx-3" >My Profile</button>
+          <button type="button" (click)="RouteToFindSuspendedUsers()" class="btn btn-warning " >View Suspended Users</button>
+          <button type="button" routerLink="/employee-roles" class="btn btn-secondary mx-3 " >View Roles</button>
+
+        </li>
+        <!-- <li class="nav-item" style="margin: 10px 20px;">
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Contact</button>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+	<div class="h1 text-center text-dark">All Departments</div>
+<section *ngFor="let row of departmentModelObject " class="light">
+	<div class="container py-2">
+		<div class="h1 text-center text-dark" id="pageHeaderTitle"></div>
+
+		<article class="postcard light blue">
+				<img class="postcard__img" src="https://upload.wikimedia.org/wikipedia/commons/5/58/Flag_of_the_Egyptian_Police.svg" alt="Image Title" />
+			<div class="postcard__text t-dark">
+				<h1 class="postcard__title blue"><span style="font-size: large; color: rgb(41, 124, 197); font-weight: bolder ; font-size: 30px;">Name: </span>{{row.DEPARTMENT_NAME}}
+					<div style="display: inline-block; margin-left: 400px;">
+						<button type="button"  class="btn btn-lg" id="uniqueButton" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="onDepartmentEdit(row)" >Edit</button>
+						<button type="button"  class="btn btn-sm btn-danger mx-1" id="Suspend" (click)="onDepartmentSuspend(row)" >Suspend</button>
+					</div>
+				</h1>
+				<h1 class="postcard__title blue"><span style="font-size: large; color: rgb(41, 124, 197); font-weight: bolder ; font-size: 30px;">Location: </span>{{row.LOCATION}}</h1>
+				<h1 class="postcard__title blue"><span style="font-size: large; color: rgb(41, 124, 197); font-weight: bolder ; font-size: 30px;">DepartmentID: </span>{{row.DEPARTMENT_ID}}</h1>
+
+				<!-- <h1 class="postcard__title blue"><a href="#" *ngFor="let item of row.employee ">{{item.username}}</a></h1> -->
+				<div class="postcard__subtitle small">
+					<time >
+						<i class="fas fa-calendar-alt mr-2"></i>{{dateTime}}
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<p style="font-weight: bolder;">Employees in Department: </p>
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th> <span style="font-size: large; color: rgb(41, 124, 197); font-weight: bolder;"> ID </span> </th>
+					<th> <span style="font-size: large; color: rgb(41, 124, 197); font-weight: bolder;"> Name </span> </th>
+					<th> <span style="font-size: large; color: rgb(41, 124, 197); font-weight: bolder;"> Action </span> </th>
+
+					
+				</tr>
+				</thead>
+				<tbody>
+					<tr class="postcard__preview-txt" *ngFor="let item of row.employee ">
+							
+								<td> {{item.EMPLOYEE_ID}}	</td>
+								<td> {{item.username}}	</td>
+								<td>
+									<!-- <button (click)="onEdit(row)" class="btn btn-outline-info mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button> -->
+									<button  (click)="onView(item)" class="btn btn-outline-dark mx-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View</button>
+									<button  (click)="deleteEmployee(item)" class="btn btn-outline-danger mx-2">Suspend</button>
+							  </td>
+
+					</tr>
+				</tbody>
+					
+				
+			</table>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-tag mr-2"></i>overall</li>
+					<li class="tag__item" style="background-color: rgb(41, 124, 197);"><i class="fas fa-clock mr-2"></i><span style="color: rgb(255, 255, 255); font-weight: bolder; font-size: 15px;">{{row.employee.length}}</span></li>
+					<li class="tag__item">
+						<i class="fas fa-play mr-2"></i>Employee
+					</li>
+				</ul>
+				
+			<div class="row" style="margin: 10px 0px 0px 0px; position: relative; right: 20px; ">
+				<div class="col-3">
+					<button class="btn btn-dark mx-1" type="submit" (click)="ASCE(x)">ASEC</button>
+					<button class="btn btn-primary" type="submit" (click)="DESC(x)">DESC</button>
+				</div>
+				<div class="col-4" style="position: relative; right:70px;">
+				 <select  class="form-select " aria-label="Default select example" style="background-color:silver;" [id]="row.DEPARTMENT_ID" (change)="toggleSubmitDisable(row.DEPARTMENT_NAME)">
+					<option value="" disabled selected hidden>Select an Employee </option>
+					<option  *ngFor="let employee of x" [value]="[employee.EMPLOYEE_ID , row.DEPARTMENT_ID]" >{{employee.EMPLOYEE_ID}} - {{employee.username}} </option>					 
+					<!-- <option  value="1">{{dept.username}}</option> -->
+				</select> 
+				
+				</div>
+				<div class="col-2" style="position: relative; right:70px;">
+				  <button [id]="row.DEPARTMENT_NAME" class="btn btn-success" type="submit" (click)="AddEmployeeToDepartment(row.DEPARTMENT_ID)" disabled>Submit</button>
+
+				</div>
+			</div>
+				
+			</div>
+		</article>
+		<!-- <article class="postcard light red">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="https://picsum.photos/501/500" alt="Image Title" />	
+			</a>
+			<div class="postcard__text t-dark">
+				<h1 class="postcard__title red"><a href="#">Podcast Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+					<li class="tag__item play red">
+						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+					</li>
+				</ul>
+			</div>
+		</article>
+		<article class="postcard light green">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="https://picsum.photos/500/501" alt="Image Title" />
+			</a>
+			<div class="postcard__text t-dark">
+				<h1 class="postcard__title green"><a href="#">Podcast Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+					<li class="tag__item play green">
+						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+					</li>
+				</ul>
+			</div>
+		</article>
+		<article class="postcard light yellow">
+			<a class="postcard__img_link" href="#">
+				<img class="postcard__img" src="https://picsum.photos/501/501" alt="Image Title" />
+			</a>
+			<div class="postcard__text t-dark">
+				<h1 class="postcard__title yellow"><a href="#">Podcast Title</a></h1>
+				<div class="postcard__subtitle small">
+					<time datetime="2020-05-25 12:00:00">
+						<i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+					</time>
+				</div>
+				<div class="postcard__bar"></div>
+				<div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+				<ul class="postcard__tagbox">
+					<li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
+					<li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
+					<li class="tag__item play yellow">
+						<a href="#"><i class="fas fa-play mr-2"></i>Play Episode</a>
+					</li>
+				</ul>
+			</div>
+		</article> -->
+	</div>
+</section>
+
+
+
+
+
+<!-- Moodal -xl -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="margin-bottom: 30px;">
+          <h5 class="modal-title" id="exampleModalLabel">Profile Detailed Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> close</button>
+        </div>
+        <div class="about-avatar" style="position: absolute; margin-top: 80px; margin-left: 20px;">
+          <img [src]="url" title="" alt="No Photo Exist for this Employee !">
+        </div>      
+
+
+
+
+
+        
+        <section class="section about-section gray-bg" id="about">
+          <div class="container">
+              <div class="row align-items-center flex-row-reverse">
+                  <div class="col-lg-6">
+                      <div class="about-text go-to">
+                          <h3 class="dark-color"></h3>
+                          <h6 class="theme-color lead">Profile Info</h6>
+                          <div class="row about-list">
+                              <div class="col-md-6">
+                                <div class="media">
+                                  <label style="font-size: 20px; color: rgb(105, 34, 34);">Employee ID</label>
+                                  <!-- <input type="text" id="viewUserName"/> -->
+                                  <p>{{viewEmployeeID}}</p>
+                                  </div>
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">Employee Name</label>
+                                      <!-- <input type="text" id="viewUserName"/> -->
+                                      <p>{{viewEmployeeModelObj.username}}</p>
+                                  </div>
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">Hire Date</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.HIRE_DATE}}</p>
+                                  </div>
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">Address</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.ADDRESS}}</p>
+                                  </div>
+                                  <div class="media">
+                                  <label style="font-size: 20px; color: rgb(105, 34, 34);">Password</label>
+                                  <p>{{viewEmployeeModelObj.password}}</p>
+                                  </div>
+                              </div>
+                              <!-- <div class="col-md-6"> -->
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">E-mail</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.EMAIL}}</p>
+                                  </div>
+                                  <!-- <div class="media">
+                                      <label>Phone</label>
+                                      <p>820-885-3321</p>
+                                  </div> -->
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">SALARY</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.SALARY}}</p>
+                                  </div>
+                                  <!-- <div class="media">
+                                      <label>Freelance</label>
+                                      <p>Available</p>
+                                  </div> -->
+                              <!-- </div> -->
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                  </div>
+              </div>
+              <div class="counter" style="margin: 40px 0px 50px 150px; ">
+                  <div class="row">
+                      <div class="col-6 col-lg-3">
+                          <div class="count-data text-center">
+                              <h6 class="count h5" data-to="500" data-speed="500">{{viewEmployeeModelObj.contactInfo.PHONE_NUMBER}}</h6>
+                              <p class="m-0px font-w-600" style="font-size: 20px; color: rgb(105, 34, 34);">Mobile</p>
+                          </div>
+                      </div>
+                      <div class="col-6 col-lg-3">
+                          <div class="count-data text-center">
+                              <h6 class="count h5" data-to="150" data-speed="150">{{viewEmployeeModelObj.contactInfo.EMAIL}}</h6>
+                              <p class="m-0px font-w-600" style="font-size: 20px; color: rgb(105, 34, 34);">E-mail</p>
+                          </div>
+                      </div>
+                      <div class="col-6 col-lg-4">
+                          <div class="count-data text-center">
+                              <h6 class="count h5" data-to="850" data-speed="850">{{viewEmployeeModelObj.contactInfo.BBX}}</h6>
+                              <p class="m-0px font-w-600" style="font-size: 20px; color: rgb(105, 34, 34);">BBX</p>
+                          </div>
+                      </div>
+                      <!-- <div class="col-6 col-lg-3">
+                          <div class="count-data text-center">
+                              <h6 class="count h2" data-to="190" data-speed="190">190</h6>
+                              <p class="m-0px font-w-600">Telephonic Talk</p>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+          </div>
+      </section>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+      <!-- Modal -->
+	  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Department Details</h5>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form [formGroup]= "formValue">
+					<div class="mb-3">
+					  <label for="exampleInputEmail1" class="form-label" style="font-weight: 630;">Department Name</label>
+					  <input type="text" formControlName="DEPARTMENT_NAME" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+					  <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+					</div>
+					<br/>
+					<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label" style="font-weight: 630;">Department Location</label>
+					<p *ngIf="showUpdate" style="font-size: medium; color: brown; font-weight: 400; display: inline-block; margin-left: 10px;">*Current Location: {{previousLocation}}</p>
+					<select  class="form-select " aria-label="Default select example"  id="select">
+						<option value="" disabled selected hidden >Select a Location </option>					 
+                        <option  *ngFor="let item of departmentsEnumKeys" [value]="item" >{{item}} </option>					 
+                        <!-- <option  value="1">{{dept.username}}</option> -->
+                    </select> 
+					
+					</div>
+				  </form>
+			</div>
+			<div class="modal-footer">
+			  <button type="button"  id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  <button *ngIf="showUpdate" type="button"  (click)= "updateDepartmentDetails()" class="btn btn-primary">update</button>
+			  <button *ngIf="showAdd" type="button"  (click)= "addDepartment()" class="btn btn-primary">Add</button>
+			  <!-- <button type="button" *ngIf="showUpdate" (click)= "updateEmployeeDetails()" class="btn btn-primary">update</button> -->
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+	  <simple-notifications></simple-notifications>

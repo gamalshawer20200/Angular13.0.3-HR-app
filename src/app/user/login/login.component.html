@@ -1,0 +1,50 @@
+<!-- <form [formGroup]= "formValue" class="col s12 white"> -->
+    <!-- <div class="row">
+        <div class="input-field col s12">
+            <i class="cis-user"></i>
+            <input type="text" #userName nmModel name="userName" placeholder="Username">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <i class="cis-key"></i>
+            <input type="password" #password nmModel name="password" placeholder="Password">
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <button class="btn btn-large btn-submit" type="submit">Login</button>
+        </div>
+    </div> -->
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+      
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img  src="https://www.pngrepo.com/png/165196/180/user.png" style="width: 200px; height: 200px;" />
+            <!-- <img src="./closeup-beautiful-green-leaves_23-2148245094.jpg" alt="132"/> -->
+          </div>
+      
+          <!-- Login Form -->
+          <form [formGroup]= "formValue" (ngSubmit)="login()">
+            <input type="text" #username formControlName="username" id="username" class="fadeIn second" name="username" placeholder="username">
+            <input type="password" #password formControlName="password" id="password" class="fadeIn third" name="password" placeholder="password">
+            <input  type="submit" class="fadeIn fourth" value="Log In">
+          </form>
+      
+          <!-- Remind Passowrd
+          <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+          </div> -->
+      
+        </div>
+      </div>
+    
+<!-- </form> -->
+
+
+<!-- [disabled]="!loginForm.valid" -->
+
+<simple-notifications></simple-notifications>

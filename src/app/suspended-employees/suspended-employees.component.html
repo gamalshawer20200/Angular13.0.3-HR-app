@@ -1,0 +1,197 @@
+<nav class="navbar bg-dark navbar-dark">    
+    <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="margin-left: 30px;">HR Management</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" style="margin-right: 30px;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item" style="margin: 10px 20px;">
+
+          <button type="button" (click)="RouteToFindAllEmployees()" class="btn btn-light mx-3" >ShowAll Employees</button>
+
+
+          <button type="button" (click)="RouteToFindAllDepartments()" class="btn btn-primary " >ShowAll Departments</button>
+
+
+          <button type="button" (click)="RouteToMyProfile()" class="btn btn-danger mx-3" >My profile</button>
+
+          
+          <button type="button" (click)="RouteToFindSuspendedUsers()" class="btn btn-warning " >View Suspended Users</button>
+
+          
+          <button type="button" routerLink="/employee-roles" class="btn btn-secondary mx-3 " >View Roles</button>
+
+
+
+        </li>
+        <li>
+          <div class="container">
+            <div class="col-6" style="position:relative; right:265px; margin-top: 10px;">
+          <div class="input-group ">
+            <!-- <mat-form-field>
+              <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Filter">
+            </mat-form-field> -->
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div style="padding:30px">
+
+<table class="table mt-3 table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">username</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">Salary</th>
+            <th scope="col">BBX</th>
+            <th scope="col">Hire Date</th>
+            <th scope="col" style="text-align: left; font-size: 25px; color: brown;">Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of employeeData">
+          <td>{{row.EMPLOYEE_ID}}</td>
+          <td>{{row.username}}</td>
+          <td>{{row.contactInfo[0]?.FIRST_NAME}}</td>
+          <td>{{row.contactInfo[0]?.LAST_NAME}}</td>
+          <td>{{row.contactInfo[0]?.EMAIL}}</td>
+          <td>{{row.contactInfo[0]?.PHONE_NUMBER}}</td>
+          <td>{{row.contactInfo[0]?.SALARY}}</td>
+          <td>{{row.contactInfo[0]?.BBX}}</td>
+          <td>{{row.contactInfo[0]?.HIRE_DATE}}</td>
+          <td>
+                <button  (click)="onView(row)" class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View</button>
+          </td>
+        </tr>
+    </tbody>
+</table> -->
+
+
+
+
+
+<!-- Modal2 -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="margin-bottom: 30px;">
+          <h5 class="modal-title" id="exampleModalLabel">Profile Detailed Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="about-avatar" style="position: absolute; margin-top: 80px; margin-left: 20px;">
+          <img [src]="url" title="" alt="no Photo exist for this Employee !">
+                    
+        </div>      
+
+
+
+
+
+        
+        <section class="section about-section gray-bg" id="about">
+          <div class="container">
+              <div class="row align-items-center flex-row-reverse">
+                  <div class="col-lg-6">
+                      <div class="about-text go-to">
+                          <h3 class="dark-color"></h3>
+                          <h6 class="theme-color lead">Profile Info</h6>
+                          <div class="row about-list">
+                              <div class="col-md-6">
+                                <div class="media">
+                                  <label style="font-size: 20px; color: rgb(105, 34, 34);">Employee ID</label>
+                                  <!-- <input type="text" id="viewUserName"/> -->
+                                  <p>{{viewEmployeeID}}</p>
+                                  </div>
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">Employee Name</label>
+                                      <!-- <input type="text" id="viewUserName"/> -->
+                                      <p>{{viewEmployeeModelObj.username}}</p>
+                                  </div>
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">Hire Date</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.HIRE_DATE}}</p>
+                                  </div>
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">Address</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.ADDRESS}}</p>
+                                  </div>
+                                  <div class="media">
+                                  <label style="font-size: 20px; color: rgb(105, 34, 34);">Password</label>
+                                  <p>{{viewEmployeeModelObj.password}}</p>
+                                  </div>
+                              </div>
+                              <!-- <div class="col-md-6"> -->
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">E-mail</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.EMAIL}}</p>
+                                  </div>
+                                  <!-- <div class="media">
+                                      <label>Phone</label>
+                                      <p>820-885-3321</p>
+                                  </div> -->
+                                  <div class="media">
+                                      <label style="font-size: 20px; color: rgb(105, 34, 34);">SALARY</label>
+                                      <p>{{viewEmployeeModelObj.contactInfo.SALARY}}</p>
+                                  </div>
+                                  <!-- <div class="media">
+                                      <label>Freelance</label>
+                                      <p>Available</p>
+                                  </div> -->
+                              <!-- </div> -->
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                  </div>
+              </div>
+              <div class="counter" style="margin: 40px 0px 50px 150px; ">
+                  <div class="row">
+                      <div class="col-6 col-lg-3">
+                          <div class="count-data text-center">
+                              <h6 class="count h5" data-to="500" data-speed="500">{{viewEmployeeModelObj.contactInfo.PHONE_NUMBER}}</h6>
+                              <p class="m-0px font-w-600" style="font-size: 20px; color: rgb(105, 34, 34);">Mobile</p>
+                          </div>
+                      </div>
+                      <div class="col-6 col-lg-3">
+                          <div class="count-data text-center">
+                              <h6 class="count h5" data-to="150" data-speed="150">{{viewEmployeeModelObj.contactInfo.EMAIL}}</h6>
+                              <p class="m-0px font-w-600" style="font-size: 20px; color: rgb(105, 34, 34);">E-mail</p>
+                          </div>
+                      </div>
+                      <div class="col-6 col-lg-4">
+                          <div class="count-data text-center">
+                              <h6 class="count h5" data-to="850" data-speed="850">{{viewEmployeeModelObj.contactInfo.BBX}}</h6>
+                              <p class="m-0px font-w-600" style="font-size: 20px; color: rgb(105, 34, 34);">BBX</p>
+                          </div>
+                      </div>
+                      <!-- <div class="col-6 col-lg-3">
+                          <div class="count-data text-center">
+                              <h6 class="count h2" data-to="190" data-speed="190">190</h6>
+                              <p class="m-0px font-w-600">Telephonic Talk</p>
+                          </div>
+                      </div> -->
+                  </div>
+              </div>
+          </div>
+      </section>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
